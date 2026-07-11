@@ -1,6 +1,6 @@
 pipeline {
 
-  agent maven
+  agent { label 'maven' } 
 
   tools {
     maven 'M3-Local'
