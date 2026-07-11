@@ -6,6 +6,10 @@ pipeline {
     maven 'M3-Local'
   }
 
+  environment {
+    IMAGE_NAME = 'qiaoke/spring-web-demo'
+  }
+
   stages {
 
     stage('Checkout') {
@@ -14,22 +18,22 @@ pipeline {
       }
     }
 
-    stage('Build') {
+    stage('Build jar') {
       steps {
         echo '编译代码'
 
-        sh 'mvn clean package'
+        sh 'mvn -B -DskipTests clean package'
       }
     }
 
-  }
+    stage('Build image') {
+      steps {
+        echo '构建镜像'
 
-  post {
-      always {
-        echo '无论构建成功或失败都会执行'
-
-        junit 'target/surefire-reports/*.xml'
+        sh 'docker build -t ${IMAGE_NAME}:${env.BUILD_NUMBER} .'
       }
+    }
+
   }
 
 }
