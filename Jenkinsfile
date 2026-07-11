@@ -30,7 +30,7 @@ pipeline {
       steps {
         echo '构建镜像'
 
-        sh 'docker build -t ${IMAGE_NAME}:${env.BUILD_NUMBER} .'
+        sh "docker build -t ${IMAGE_NAME}:${env.BUILD_NUMBER} ."
       }
     }
 
